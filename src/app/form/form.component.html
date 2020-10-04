@@ -1,0 +1,209 @@
+<div class="h2 text-light p-3 mt-2 border-bottom border-secondary">
+  New Employee
+</div>
+<form class="w-75 text-light" [formGroup]="form">
+  <div class="form-group my-3">
+    <input
+      formControlName="associateName"
+      type="text"
+      class="form-control"
+      
+      [class.is-invalid]="associateName.touched && associateName.invalid"
+      [class.is-valid]="associateName.touched && associateName.valid"
+      placeholder="Associate Name"
+    />
+    <small
+      *ngIf="associateName.touched && associateName.invalid"
+      class="text-danger font-weight-bold"
+    >
+      <div *ngIf="associateName.errors.required">
+        Please enter the Associate Name
+      </div>
+      <div
+        *ngIf="
+          !associateName.errors.required &&
+          (associateName.errors.lengthNotProper ||
+            associateName.errors.formatNotProper)
+        "
+      >
+        Accepts Alphabets, space & Min 5 to Max 30 Char
+      </div>
+    </small>
+  </div>
+
+  <div class="form-group my-3">
+    <input
+      formControlName="associateId"
+      type="text"
+      class="form-control"
+      placeholder="Associate Id"
+      [class.is-invalid]="associateId.touched && associateId.invalid"
+      [class.is-valid]="associateId.touched && associateId.valid"
+    />
+    <small
+      *ngIf="associateId.touched && associateId.invalid"
+      class="text-danger font-weight-bold"
+    >
+      <div *ngIf="associateId.errors.required">
+        Please enter the Associate id
+      </div>
+      <div
+        *ngIf="
+          !associateId.errors.required &&
+          (associateId.errors.lengthNotProper ||
+            associateId.errors.formatNotProper)
+        "
+      >
+        Invalid Associate Id
+      </div>
+    </small>
+  </div>
+
+  <div class="form-group my-3">
+    <input
+      formControlName="projectId"
+      type="text"
+      class="form-control"
+      placeholder="Project ID"
+      [class.is-invalid]="projectId.touched && projectId.invalid"
+      [class.is-valid]="projectId.touched && projectId.valid"
+    />
+    <small
+      *ngIf="projectId.touched && projectId.invalid"
+      class="text-danger font-weight-bold"
+    >
+      <div *ngIf="projectId.errors.required">Please enter the Project id</div>
+      <div
+        *ngIf="
+          !projectId.errors.required &&
+          (projectId.errors.lengthNotProper || projectId.errors.formatNotProper)
+        "
+      >
+        Invalid Project Id
+      </div>
+    </small>
+  </div>
+
+  <div class="my-3">
+    <div class="form-check form-check-inline">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="inlineRadioOptions"
+        value="Onshore"
+        formControlName="inlineRadioOptions"
+        (change)="changeLocationsList($event)"
+        id="inlineRadio1"
+      />
+      <label class="form-check-label" for="inlineRadio1">Onshore</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="inlineRadioOptions"
+        value="Offshore"
+        formControlName="inlineRadioOptions"
+        (change)="changeLocationsList($event)"
+        id="inlineRadio2"
+      />
+      <label class="form-check-label" for="inlineRadio2">Offshore</label>
+    </div>
+    <div class="form-group">
+      <select
+        formControlName="locationSelect"
+        class="form-control"
+        [class.is-invalid]="inlineRadioOptions.touched && locationSelect.invalid"
+        [class.is-valid]="
+          inlineRadioOptions.touched && locationSelect.valid
+        "
+      >
+        <option value="" disabled selected></option>
+        <option *ngFor="let location of listOfLocations">{{ location }}</option>
+      </select>
+      <small>
+        <div
+          *ngIf="inlineRadioOptions.touched && locationSelect.invalid"
+          class="text-danger font-weight-bold"
+        >
+          Please enter the Location
+        </div>
+      </small>
+    </div>
+  </div>
+  <div>
+    <div class="row row-cols-3 my-4">
+      <div
+        class="col mb-2"
+        *ngFor="let skill of skillsList.controls; let i = index"
+      >
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [formControl]="skill"
+            [id]="'checkBox' + i"
+          />
+          <label class="form-check-label" [for]="'checkBox' + i">
+            {{ listOfSkills[i] }}
+          </label>
+        </div>
+      </div>
+    </div>
+    <div
+      *ngIf="skillsList.touched && skillsList.invalid"
+      class="text-danger font-weight-bold"
+    >
+      Please select Min 5 skills.
+    </div>
+  </div>
+
+  <div class="form-group w-50 my-3">
+    <div class="input-group mb-3">
+      <div class="custom-file">
+        <input
+          type="file"
+          class="custom-file-input"
+          [class.is-invalid]="fileSelect.touched && fileSelect.invalid"
+          [class.is-valid]="fileSelect.touched && fileSelect.valid"
+          id="fileUpload"
+          formControlName="fileSelect"
+          accept=".jpg,.jpeg,.bmp,.png"
+        />
+        <label class="custom-file-label" for="fileUpload">Upload Profile</label>
+      </div>
+    </div>
+
+    <small>
+      <div
+        *ngIf="fileSelect.touched && fileSelect.invalid"
+        class="text-danger font-weight-bold"
+      >
+        Please upload Profile Picture
+      </div>
+    </small>
+  </div>
+
+  <div class="form-group my-3">
+    <textarea
+      formControlName="commentsArea"
+      class="form-control"
+      [class.border]="commentsArea.touched && commentsArea.invalid"
+      [class.border-danger]="commentsArea.touched && commentsArea.invalid"
+      id="exampleFormControlTextarea1"
+      rows="3"
+      placeholder="Comments"
+    ></textarea>
+    <small>
+      <div
+        *ngIf="commentsArea.touched && commentsArea.invalid"
+        class="text-danger font-weight-bold"
+      >
+        Please Enter Comments
+      </div>
+    </small>
+  </div>
+
+  <button class="btn btn-primary" [disabled]="form.invalid">Submit</button>
+  <button class="btn btn-danger ml-2" (click)="clearAll()">Reset</button>
+</form>

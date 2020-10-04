@@ -17,5 +17,9 @@ export class TableComponent implements OnInit {
     this._data.splice(index, 1);
   }
 
+  editData(obj: { index: number; data: {} }) {
+    this._data.splice(obj.index, 1, obj.data);
+  }
+
   ngOnInit(): void {}
 }

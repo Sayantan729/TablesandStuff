@@ -8,6 +8,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class TableBodyComponent implements OnInit {
   @Input('dataBody') dataBody;
   @Output('delete') delete = new EventEmitter();
+  @Output('edit') edit = new EventEmitter();
   data = [];
   keysList = [];
   dataList: [];
@@ -25,6 +26,13 @@ export class TableBodyComponent implements OnInit {
 
   editData(index) {
     this.changeStatusList[index] = !this.changeStatusList[index];
+    if (!this.changeStatusList[index]) {
+      let obj = {};
+      (this.dataList[index] as string[]).forEach((item, index) => {
+        obj[this.keysList[index]] = item;
+      });
+      this.edit.emit({ index: index, data: obj });
+    }
   }
 
   deleteData(index) {
