@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { TableComponent } from './table/table.component';
 import { TableHeaderComponent } from './table-header/table-header.component';
 import { TableBodyComponent } from './table-body/table-body.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { TableBodyComponent } from './table-body/table-body.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

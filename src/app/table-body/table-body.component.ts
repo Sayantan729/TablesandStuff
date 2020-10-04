@@ -8,10 +8,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class TableBodyComponent implements OnInit {
   @Input('dataBody') dataBody;
   @Output('delete') delete = new EventEmitter();
-  data=[];
-  keysList=[];
-  dataList:[];
-  changeStatusList:boolean[];
+  data = [];
+  keysList = [];
+  dataList: [];
+  changeStatusList: boolean[];
 
   constructor() {}
 
@@ -20,17 +20,20 @@ export class TableBodyComponent implements OnInit {
     console.log(this.keysList);
 
     this.dataList = this.dataBody.map((item) => Object.values(item));
-    this.changeStatusList=this.dataBody.map((item)=>false);
+    this.changeStatusList = this.dataBody.map((item) => false);
   }
 
-  editData(index)
-  {
-    this.changeStatusList[index]=!this.changeStatusList[index];
+  editData(index) {
+    this.changeStatusList[index] = !this.changeStatusList[index];
   }
 
   deleteData(index) {
     this.dataList.splice(index, 1);
-    this.changeStatusList.splice(index,1);
+    this.changeStatusList.splice(index, 1);
     this.delete.emit(index);
+  }
+
+  trackByIndex(index: any, item: any) {
+    return index;
   }
 }

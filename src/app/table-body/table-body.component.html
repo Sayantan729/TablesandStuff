@@ -8,7 +8,7 @@
       [class]="keysList[j]"
       [class.bg-even]="i % 2"
       [class.bg-odd]="!(i % 2)"
-      *ngFor="let d of datum; let j = index"
+      *ngFor="let d of datum; let j = index; trackBy: trackByIndex"
     >
       <div *ngIf="j != keysList.indexOf('pic') && !changeStatusList[i]">
         {{ d }}
@@ -16,7 +16,7 @@
       <input
         type="text"
         class="form-control"
-        value="{{ d }}"
+        [(ngModel)]="datum[j]"
         *ngIf="j != keysList.indexOf('pic') && changeStatusList[i]"
       />
       <img
