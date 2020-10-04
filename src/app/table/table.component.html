@@ -1,0 +1,11 @@
+<div class="row row-cols-1">
+  <app-table-header
+    class="col sticky-top"
+    [dataHeader]="_data"
+  ></app-table-header>
+  <app-table-body
+    class="col"
+    [dataBody]="_data"
+    (delete)="deleteData($event)"
+  ></app-table-body>
+</div>

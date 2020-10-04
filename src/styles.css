@@ -1,1 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+.bg-header,
+.bg-body,
+.bg-even {
+  background-color: rgb(52, 58, 64);
+}
+.bg-odd {
+  background-color: rgb(62, 68, 74);
+}

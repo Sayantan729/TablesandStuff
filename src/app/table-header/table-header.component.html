@@ -1,0 +1,13 @@
+<div class="row row-cols-1">
+  <div class="col row row-cols-{{ data.length + 1 }}">
+    <div
+      class="col text-light bg-header h2 mb-0 border-bottom border-secondary p-4"
+      *ngFor="let datum of data"
+    >
+      <div *ngIf="datum != 'pic'">{{ datum }}</div>
+    </div>
+    <div
+      class="col text-light bg-header h2 mb-0 border-bottom border-secondary p-4"
+    ></div>
+  </div>
+</div>
