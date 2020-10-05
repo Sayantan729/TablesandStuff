@@ -5,94 +5,102 @@ import { AssociateNameValidators } from './validators/associateName.validators';
 import { CommonValidators } from './validators/common.validators';
 import { ProjectIdValidators } from './validators/projectId.validators';
 import { SkillSetValidators } from './validators/skillSet.validators';
+import { FetchDataService } from './../services/fetch-data/fetch-data.service';
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.css']
+  styleUrls: ['./form.component.css'],
 })
 export class FormComponent {
-
   form;
   locations;
   listOfLocations: string[];
   listOfSkills;
   listOfBool;
 
-
-
-
-
-
-
-
-  constructor(formBuilder: FormBuilder) {
+  constructor(formBuilder: FormBuilder, private fetchData: FetchDataService) {
     this.form = formBuilder.group({
-      'associateName': ['', [CommonValidators.fieldRequired, AssociateNameValidators.checkLength, AssociateNameValidators.checkFormat]],
-      'associateId': ['', [CommonValidators.fieldRequired, AssociateIdValidators.checkLength, AssociateIdValidators.checkFormat]],
-      'projectId': ['', [CommonValidators.fieldRequired, ProjectIdValidators.checkLength, ProjectIdValidators.checkFormat]],
-      'inlineRadioOptions': [''],
-      'locationSelect': ['', CommonValidators.fieldRequired],
-      'skillsList': formBuilder.array([], SkillSetValidators.checkNumSelected(5)),
-      'fileSelect': ['', CommonValidators.fieldRequired],
-      'commentsArea': ['', CommonValidators.fieldRequired]
+      associateName: [
+        '',
+        [CommonValidators.fieldRequired, AssociateNameValidators.checkFormat],
+      ],
+      associateId: [
+        '',
+        [
+          CommonValidators.fieldRequired,
+          AssociateIdValidators.checkLength,
+          AssociateIdValidators.checkFormat,
+        ],
+      ],
+      projectName: [
+        '',
+        [CommonValidators.fieldRequired, ProjectIdValidators.checkFormat],
+      ],
+      inlineRadioOptions: [''],
 
-
-
-
+      skillsList: formBuilder.array([], SkillSetValidators.checkNumSelected(5)),
+      fileSelect: ['', CommonValidators.fieldRequired],
+      hcmName: [
+        '',
+        [CommonValidators.fieldRequired, AssociateNameValidators.checkFormat],
+      ],
     });
 
-    this.locations = {
-      'Onshore': ['US', 'Non US'],
-      'Offshore': ['Chennai', 'Bangalore', 'Hyderabad', 'Pune', 'Kochi']
-    };
-
-    this.listOfSkills = ['HTML5,CSS3,JS', 'Angular 8', 'Express JS', 'SASS', 'React JS', 'Node JS', 'ES5,ES6,ES7...', 'Vue JS', 'Mongo DB', 'Bootstrap 4', 'TypeScript'];
-    this.listOfBool = [false, false, false, false, false, false, false, false, false, false, false];
-
-
+    this.listOfSkills = [
+      'HTML5,CSS3,JS',
+      'Angular 8',
+      'Express JS',
+      'SASS',
+      'React JS',
+      'Node JS',
+      'ES5,ES6,ES7',
+      'Vue JS',
+      'Mongo DB',
+      'Bootstrap 4',
+      'TypeScript',
+    ];
+    this.listOfBool = [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+    ];
 
     this.populateSkills();
   }
 
-
-
   populateSkills() {
-    this.listOfSkills.forEach(skill => {
-      this.form.get('skillsList').push(new FormControl(this.listOfBool[this.listOfSkills.indexOf(skill)]));
-    })
-
-
-
+    this.listOfSkills.forEach((skill) => {
+      this.form
+        .get('skillsList')
+        .push(
+          new FormControl(this.listOfBool[this.listOfSkills.indexOf(skill)])
+        );
+    });
   }
-
-
 
   get associateName() {
     return this.form.get('associateName');
-
   }
 
   get associateId() {
     return this.form.get('associateId');
-
   }
 
-  get projectId() {
-    return this.form.get('projectId');
-
-  }
-
-  get locationSelect() {
-    return this.form.get('locationSelect');
+  get projectName() {
+    return this.form.get('projectName');
   }
 
   get fileSelect() {
     return this.form.get('fileSelect');
-  }
-
-  get commentsArea() {
-    return this.form.get('commentsArea');
   }
 
   get skillsList() {
@@ -103,15 +111,28 @@ export class FormComponent {
     return this.form.get('inlineRadioOptions');
   }
 
+  get hcmName() {
+    return this.form.get('hcmName');
+  }
 
-
-  changeLocationsList(event) {
-
-    this.listOfLocations = [...this.locations[event.target.value]];
+  submitAll() {
+    console.log(this.form.value);
+    let val = this.form.value;
+    let data = {
+      pic: (val['inlineRadioOptions'] as string).toLowerCase() + '.png',
+      Id: val['associateId'],
+      Name: val['associateName'],
+      Skills: this.listOfSkills
+        .filter((item, index) => val['skillsList'][index])
+        .join(','),
+      Project: val['projectName'],
+      HCM: val['hcmName'],
+    };
+    this.fetchData.setData(data);
+    this.clearAll();
   }
 
   clearAll() {
     this.form.reset();
   }
-
 }

@@ -92,4 +92,9 @@ export class FetchDataService {
   get data() {
     return this._data;
   }
+
+  setData(emp)
+  {
+    this._data.push(emp);
+  }
 }

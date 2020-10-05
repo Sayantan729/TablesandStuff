@@ -12,7 +12,7 @@ export class ProjectIdValidators {
     }
 
     static checkFormat(control: AbstractControl): ValidationErrors | null {
-        let regex = new RegExp(/^[a-zA-Z0-9]*$/)
+        let regex = new RegExp(/^[a-zA-Z0-9 ]*$/)
         if (control.value !== null) {
             if (!regex.test(control.value as string))
                 return { 'formatNotProper': true };

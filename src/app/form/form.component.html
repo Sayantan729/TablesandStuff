@@ -7,7 +7,6 @@
       formControlName="associateName"
       type="text"
       class="form-control"
-      
       [class.is-invalid]="associateName.touched && associateName.invalid"
       [class.is-valid]="associateName.touched && associateName.valid"
       placeholder="Associate Name"
@@ -21,12 +20,10 @@
       </div>
       <div
         *ngIf="
-          !associateName.errors.required &&
-          (associateName.errors.lengthNotProper ||
-            associateName.errors.formatNotProper)
+          !associateName.errors.required && associateName.errors.formatNotProper
         "
       >
-        Accepts Alphabets, space & Min 5 to Max 30 Char
+        Accepts Alphabets and Space
       </div>
     </small>
   </div>
@@ -54,32 +51,53 @@
             associateId.errors.formatNotProper)
         "
       >
-        Invalid Associate Id
+        Invalid Associate Id, Should be a 6-digit number
       </div>
     </small>
   </div>
 
   <div class="form-group my-3">
     <input
-      formControlName="projectId"
+      formControlName="projectName"
       type="text"
       class="form-control"
-      placeholder="Project ID"
-      [class.is-invalid]="projectId.touched && projectId.invalid"
-      [class.is-valid]="projectId.touched && projectId.valid"
+      placeholder="Project Name"
+      [class.is-invalid]="projectName.touched && projectName.invalid"
+      [class.is-valid]="projectName.touched && projectName.valid"
     />
     <small
-      *ngIf="projectId.touched && projectId.invalid"
+      *ngIf="projectName.touched && projectName.invalid"
       class="text-danger font-weight-bold"
     >
-      <div *ngIf="projectId.errors.required">Please enter the Project id</div>
+      <div *ngIf="projectName.errors.required">
+        Please enter the Project Name
+      </div>
       <div
         *ngIf="
-          !projectId.errors.required &&
-          (projectId.errors.lengthNotProper || projectId.errors.formatNotProper)
+          !projectName.errors.required && projectName.errors.formatNotProper
         "
       >
-        Invalid Project Id
+        Invalid Project Name, Special characters not allowed
+      </div>
+    </small>
+  </div>
+
+  <div class="form-group my-3">
+    <input
+      formControlName="hcmName"
+      type="text"
+      class="form-control"
+      [class.is-invalid]="hcmName.touched && hcmName.invalid"
+      [class.is-valid]="hcmName.touched && hcmName.valid"
+      placeholder="HCM"
+    />
+    <small
+      *ngIf="hcmName.touched && hcmName.invalid"
+      class="text-danger font-weight-bold"
+    >
+      <div *ngIf="hcmName.errors.required">Please enter the HCM Name</div>
+      <div *ngIf="!hcmName.errors.required && hcmName.errors.formatNotProper">
+        Accepts Alphabets and Space
       </div>
     </small>
   </div>
@@ -90,45 +108,22 @@
         class="form-check-input"
         type="radio"
         name="inlineRadioOptions"
-        value="Onshore"
+        value="Male"
         formControlName="inlineRadioOptions"
-        (change)="changeLocationsList($event)"
         id="inlineRadio1"
       />
-      <label class="form-check-label" for="inlineRadio1">Onshore</label>
+      <label class="form-check-label" for="inlineRadio1">Male</label>
     </div>
     <div class="form-check form-check-inline">
       <input
         class="form-check-input"
         type="radio"
         name="inlineRadioOptions"
-        value="Offshore"
+        value="Female"
         formControlName="inlineRadioOptions"
-        (change)="changeLocationsList($event)"
         id="inlineRadio2"
       />
-      <label class="form-check-label" for="inlineRadio2">Offshore</label>
-    </div>
-    <div class="form-group">
-      <select
-        formControlName="locationSelect"
-        class="form-control"
-        [class.is-invalid]="inlineRadioOptions.touched && locationSelect.invalid"
-        [class.is-valid]="
-          inlineRadioOptions.touched && locationSelect.valid
-        "
-      >
-        <option value="" disabled selected></option>
-        <option *ngFor="let location of listOfLocations">{{ location }}</option>
-      </select>
-      <small>
-        <div
-          *ngIf="inlineRadioOptions.touched && locationSelect.invalid"
-          class="text-danger font-weight-bold"
-        >
-          Please enter the Location
-        </div>
-      </small>
+      <label class="form-check-label" for="inlineRadio2">Female</label>
     </div>
   </div>
   <div>
@@ -184,26 +179,6 @@
     </small>
   </div>
 
-  <div class="form-group my-3">
-    <textarea
-      formControlName="commentsArea"
-      class="form-control"
-      [class.border]="commentsArea.touched && commentsArea.invalid"
-      [class.border-danger]="commentsArea.touched && commentsArea.invalid"
-      id="exampleFormControlTextarea1"
-      rows="3"
-      placeholder="Comments"
-    ></textarea>
-    <small>
-      <div
-        *ngIf="commentsArea.touched && commentsArea.invalid"
-        class="text-danger font-weight-bold"
-      >
-        Please Enter Comments
-      </div>
-    </small>
-  </div>
-
-  <button class="btn btn-primary" [disabled]="form.invalid">Submit</button>
+  <button class="btn btn-primary" [disabled]="form.invalid" (click)="submitAll()">Submit</button>
   <button class="btn btn-danger ml-2" (click)="clearAll()">Reset</button>
 </form>

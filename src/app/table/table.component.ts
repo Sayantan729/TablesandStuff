@@ -9,8 +9,8 @@ import { FetchDataService } from './../services/fetch-data/fetch-data.service';
 export class TableComponent implements OnInit {
   _data;
 
-  constructor(fetchData: FetchDataService) {
-    this._data = fetchData.data;
+  constructor(private fetchData: FetchDataService) {
+    
   }
 
   deleteData(index) {
@@ -21,5 +21,5 @@ export class TableComponent implements OnInit {
     this._data.splice(obj.index, 1, obj.data);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {this._data = this.fetchData.data;}
 }
