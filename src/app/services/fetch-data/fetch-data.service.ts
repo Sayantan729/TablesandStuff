@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 export class Employee {
   constructor(
     public pic: string = '',
-    public Id: number = 0,
+    public Id: number = null,
     public Name: string = '',
     public Skills: string = '',
     public Project: string = '',
