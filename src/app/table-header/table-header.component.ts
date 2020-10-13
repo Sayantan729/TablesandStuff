@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+import { Employee } from './../services/fetch-data/fetch-data.service';
+
 @Component({
   selector: 'app-table-header',
   templateUrl: './table-header.component.html',
@@ -12,6 +14,15 @@ export class TableHeaderComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.data = Object.keys(this.dataHeader[0]);
+    this.data = Object.keys(new Employee());
+    console.log(this.data);
+    
+    
+    
+    
+    
+    
+    
+    
   }
 }

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Employee } from './../services/fetch-data/fetch-data.service';
 
 @Component({
   selector: 'app-table-body',
@@ -17,7 +18,7 @@ export class TableBodyComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.keysList = Object.keys(this.dataBody[0]);
+    this.keysList = Object.keys(new Employee());
     console.log(this.keysList);
 
     this.dataList = this.dataBody.map((item) => Object.values(item));
