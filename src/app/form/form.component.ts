@@ -5,7 +5,10 @@ import { AssociateNameValidators } from './validators/associateName.validators';
 import { CommonValidators } from './validators/common.validators';
 import { ProjectIdValidators } from './validators/projectId.validators';
 import { SkillSetValidators } from './validators/skillSet.validators';
-import { FetchDataService } from './../services/fetch-data/fetch-data.service';
+import {
+  FetchDataService,
+  Employee,
+} from './../services/fetch-data/fetch-data.service';
 
 @Component({
   selector: 'app-form',
@@ -40,7 +43,7 @@ export class FormComponent {
       inlineRadioOptions: [''],
 
       skillsList: formBuilder.array([], SkillSetValidators.checkNumSelected(5)),
-      fileSelect: ['', CommonValidators.fieldRequired],
+      
       hcmName: [
         '',
         [CommonValidators.fieldRequired, AssociateNameValidators.checkFormat],
@@ -48,13 +51,13 @@ export class FormComponent {
     });
 
     this.listOfSkills = [
-      'HTML5,CSS3,JS',
+      'HTML5, CSS3, JS',
       'Angular 8',
       'Express JS',
       'SASS',
       'React JS',
       'Node JS',
-      'ES5,ES6,ES7',
+      'ES5, ES6, ES7',
       'Vue JS',
       'Mongo DB',
       'Bootstrap 4',
@@ -118,16 +121,16 @@ export class FormComponent {
   submitAll() {
     console.log(this.form.value);
     let val = this.form.value;
-    let data = {
-      pic: (val['inlineRadioOptions'] as string).toLowerCase() + '.png',
-      Id: val['associateId'],
-      Name: val['associateName'],
-      Skills: this.listOfSkills
+    let data = new Employee(
+      (val['inlineRadioOptions'] as string).toLowerCase() + '.png',
+      val['associateId'],
+      val['associateName'],
+      this.listOfSkills
         .filter((item, index) => val['skillsList'][index])
-        .join(','),
-      Project: val['projectName'],
-      HCM: val['hcmName'],
-    };
+        .join(', '),
+      val['projectName'],
+      val['hcmName']
+    );
     this.fetchData.setData(data);
     this.clearAll();
   }

@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 
 export class Employee {
   constructor(
-    public pic: string = '',
-    public Id: number = null,
-    public Name: string = '',
-    public Skills: string = '',
-    public Project: string = '',
-    public HCM: string = ''
+    private pic: string = '',
+    private Id: number = null,
+    private Name: string = '',
+    private Skills: string = '',
+    private Project: string = '',
+    private HCM: string = ''
   ) {}
 }
 @Injectable({
@@ -17,7 +17,7 @@ export class FetchDataService {
   private _data: Employee[];
 
   constructor() {
-    this._data = [];
+    this._data=[new Employee('male.png',873285,'Debjoy Bhowal','HTML5, CSS3, JS, Angular 8, Express JS, Node JS, ES5, ES6, ES7, Bootstrap 4, TypeScript','Interactive','Sarah Anthony')];
   }
 
   get data() {

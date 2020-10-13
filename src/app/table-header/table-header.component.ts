@@ -15,7 +15,7 @@ export class TableHeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.data = Object.keys(new Employee());
-    console.log(this.data);
+    
     
     
     
